@@ -248,7 +248,7 @@ public class BarangForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Semua Form Wajib Diisi");
             return false;
             }
-            if(!form.ThrowData()[2].equals(kodeText.getText())){
+            if(!form.ThrowData()[1].equals(kodeText.getText())){
                 ResultSet kode = dbConnection.getData("select kode from barang where kode='"+ kodeText.getText() +"'");
                 if(kode.next()){
                     JOptionPane.showMessageDialog(this, "Kode Barang Telah Digunakan");
