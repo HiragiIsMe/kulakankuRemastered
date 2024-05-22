@@ -27,7 +27,7 @@ public class dbConnection {
         try{
             conn = DriverManager.getConnection("jdbc:mysql://localhost/"+ dbName, dbUsername, dbPassword);
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error " + e.toString());
+            System.out.println("Error " + e.toString());
         }
         return conn;
     }
@@ -37,7 +37,7 @@ public class dbConnection {
             stm = getConn().createStatement();
             rs = stm.executeQuery(query);
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error " + e.toString());
+            System.out.println("Error " + e.toString());
         }
         
         return rs;

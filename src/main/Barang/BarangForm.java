@@ -2,51 +2,62 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package main.Pegawai;
+package main.Barang;
 
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import utils.CustomButton;
-import utils.PasswordHash;
 import utils.RoundedPanelBorder;
-import utils.RoundedPasswordTextField;
 import utils.RoundedTextField;
 import utils.dbConnection;
+import java.sql.PreparedStatement;
 
 /**
  *
  * @author hirag
  */
-public class PegawaiForm extends javax.swing.JFrame {
+public class BarangForm extends javax.swing.JFrame {
     public static int row;
-    private Pegawai form;
-    public PegawaiForm(Pegawai form) {
+    private Barang form;
+    ArrayList<Integer> id_unit = new ArrayList<>();
+    public BarangForm(Barang form) {
         initComponents();
         this.form = form;
         this.dispose();
         this.setLocationRelativeTo(null);
         this.setUndecorated(true);
         this.setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),10, 10));
-
-        loadUpData();
+        loadUnit();
+        loadUpdate();
+        
     }
-    
-    void loadUpData(){
-        if(Pegawai.Act == 2){
-            namaText.setText(form.ThrowData()[1]);
-            usernameText.setText(form.ThrowData()[2]);
-            rfidText.setText(form.ThrowData()[3]);
-            if(form.ThrowData()[4].equals("1")){
-                roleText.setSelectedIndex(0);
-            }else{
-                roleText.setSelectedIndex(1);
-            }
+    void loadUpdate(){
+        if(Barang.Act == 2){
+            kodeText.setText(form.ThrowData()[1]);
+            namaText.setText(form.ThrowData()[2]);
+            hargaText.setText(form.ThrowData()[3]);
+            unitText.setSelectedItem(form.ThrowData()[4]);
+            id_unit.get(unitText.getSelectedIndex());
         }
     }
-    
+     void loadUnit(){
+        DefaultComboBoxModel data = new DefaultComboBoxModel<>();
+        String query = "select * from unit";
+        ResultSet rs = dbConnection.getData(query);
+        try{
+            while(rs.next()){
+                id_unit.add(rs.getInt("id"));
+                data.addElement(rs.getString("unit"));
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex.toString());
+        }
+        unitText.setModel(data);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -54,15 +65,13 @@ public class PegawaiForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        namaText = new javax.swing.JTextField();
+        kodeText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        usernameText = new javax.swing.JTextField();
+        namaText = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        rfidText = new javax.swing.JTextField();
-        passwordText = new javax.swing.JPasswordField();
-        roleText = new javax.swing.JComboBox<>();
+        hargaText = new javax.swing.JTextField();
+        unitText = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -73,48 +82,43 @@ public class PegawaiForm extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(127, 39, 255));
-        jLabel1.setText("Data Pegawai");
+        jLabel1.setText("Data Barang");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(127, 39, 255));
-        jLabel2.setText("Nama");
+        jLabel2.setText("Kode");
+
+        kodeText = new RoundedTextField(10, 15, 2);
+        kodeText.setBackground(new java.awt.Color(238, 247, 255));
+        kodeText.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        kodeText.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 8, 2, 8));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(127, 39, 255));
+        jLabel3.setText("Nama");
 
         namaText = new RoundedTextField(10, 15, 2);
         namaText.setBackground(new java.awt.Color(238, 247, 255));
         namaText.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         namaText.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 8, 2, 8));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(127, 39, 255));
-        jLabel3.setText("Username");
-
-        usernameText = new RoundedTextField(10, 15, 2);
-        usernameText.setBackground(new java.awt.Color(238, 247, 255));
-        usernameText.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        usernameText.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 8, 2, 8));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(127, 39, 255));
-        jLabel4.setText("Kode RFID");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(127, 39, 255));
-        jLabel5.setText("Password");
+        jLabel4.setText("Harga");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(127, 39, 255));
-        jLabel6.setText("Role");
+        jLabel6.setText("Unit");
 
-        rfidText = new RoundedTextField(10, 15, 2);
-        rfidText.setBackground(new java.awt.Color(238, 247, 255));
-        rfidText.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        rfidText.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 8, 2, 8));
-
-        passwordText = new RoundedPasswordTextField(10, 15, 2);
-        passwordText.setBackground(new java.awt.Color(238, 247, 255));
-        passwordText.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 8, 2, 8));
-
-        roleText.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Kasir" }));
+        hargaText = new RoundedTextField(10, 15, 2);
+        hargaText.setBackground(new java.awt.Color(238, 247, 255));
+        hargaText.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        hargaText.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 8, 2, 8));
+        hargaText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                hargaTextKeyTyped(evt);
+            }
+        });
 
         jButton1 = new CustomButton("Simpan");
         jButton1.setBackground(new java.awt.Color(127, 39, 255));
@@ -158,62 +162,55 @@ public class PegawaiForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roleText, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2)
-                                .addComponent(namaText)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel6)
-                                .addComponent(rfidText, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(kodeText)
+                            .addComponent(jLabel4)
+                            .addComponent(hargaText, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(303, 303, 303)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3)))
+                                .addComponent(namaText, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel6)
+                                .addComponent(unitText, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addGap(185, 185, 185)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(231, 231, 231)
+                            .addGap(221, 221, 221)
                             .addComponent(jLabel1))))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGap(50, 50, 50)
+                .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addGap(1, 1, 1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(namaText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kodeText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel6))
                 .addGap(1, 1, 1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rfidText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addGap(1, 1, 1)
-                .addComponent(roleText, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                    .addComponent(hargaText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unitText, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(53, 53, 53))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -231,22 +228,13 @@ public class PegawaiForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     boolean valIn(){
         try{
-            if(namaText.getText().equals("") || usernameText.getText().equals("") || rfidText.getText().equals("") || passwordText.getText().equals("")){
+            if(kodeText.getText().equals("") || namaText.getText().equals("") || hargaText.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Semua Form Wajib Diisi");
             return false;
             }
-            if(passwordText.getText().length() < 8){
-                JOptionPane.showMessageDialog(this, "Password Harus Setidaknya 8 Character");
-                return false;
-            }
-            ResultSet uname = dbConnection.getData("select username from users where username='"+ usernameText.getText() +"'");
-            if(uname.next()){
-                JOptionPane.showMessageDialog(this, "Username Telah Digunakan");
-                return false;
-            }
-            ResultSet rcode = dbConnection.getData("select rfid_code from users where rfid_code='"+ rfidText.getText() +"'");
-            if(rcode.next()){
-                JOptionPane.showMessageDialog(this, "Kode RFID Telah Digunakan");
+            ResultSet kode = dbConnection.getData("select kode from barang where kode='"+ kodeText.getText() +"'");
+            if(kode.next()){
+                JOptionPane.showMessageDialog(this, "Kode Barang Telah Digunakan");
                 return false;
             }
         }catch(Exception e){
@@ -256,21 +244,14 @@ public class PegawaiForm extends javax.swing.JFrame {
     }
     boolean valUp(){
         try{
-            if(namaText.getText().equals("") || usernameText.getText().equals("") || rfidText.getText().equals("")){
+            if(kodeText.getText().equals("") || namaText.getText().equals("") || hargaText.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Semua Form Wajib Diisi");
             return false;
             }
-            if(!form.ThrowData()[2].equals(usernameText.getText())){
-                ResultSet uname = dbConnection.getData("select username from users where username='"+ usernameText.getText() +"'");
-                if(uname.next()){
-                    JOptionPane.showMessageDialog(this, "Username Telah Digunakan");
-                    return false;
-                }
-            }
-            if(!form.ThrowData()[3].equals(rfidText.getText())){
-                ResultSet rcode = dbConnection.getData("select rfid_code from users where rfid_code='"+ rfidText.getText() +"'");
-                if(rcode.next()){
-                    JOptionPane.showMessageDialog(this, "Kode RFID Telah Digunakan");
+            if(!form.ThrowData()[2].equals(kodeText.getText())){
+                ResultSet kode = dbConnection.getData("select kode from barang where kode='"+ kodeText.getText() +"'");
+                if(kode.next()){
+                    JOptionPane.showMessageDialog(this, "Kode Barang Telah Digunakan");
                     return false;
                 }
             }
@@ -280,14 +261,13 @@ public class PegawaiForm extends javax.swing.JFrame {
         return true;
     }
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-       if(Pegawai.Act == 1 && valIn()){
-           String sql = "INSERT INTO users (nama, username, rfid_code, password, role) VALUES (?, ?, ?, ?, ?)";
-            try (PreparedStatement stmt = dbConnection.getConn().prepareStatement(sql)) {
-                stmt.setString(1, namaText.getText());
-                stmt.setString(2, usernameText.getText());
-                stmt.setString(3, rfidText.getText());
-                stmt.setString(4, PasswordHash.encrypt(passwordText.getText()));
-                stmt.setString(5, String.valueOf(String.valueOf(roleText.getSelectedIndex() + 1)));
+        if(Barang.Act == 1 && valIn()){
+            String query = "INSERT INTO barang (kode, nama, id_unit, harga) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement stmt = dbConnection.getConn().prepareStatement(query)) {
+                stmt.setString(1, kodeText.getText());
+                stmt.setString(2, namaText.getText());
+                stmt.setInt(3, id_unit.get(unitText.getSelectedIndex()));
+                stmt.setInt(4, Integer.valueOf(hargaText.getText()));
                 stmt.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan");
                 form.loadTableData();
@@ -295,59 +275,24 @@ public class PegawaiForm extends javax.swing.JFrame {
             }catch(Exception e){
                 System.out.println(e.toString());
             }
-       }
-        if(Pegawai.Act == 2 && valUp()){
-            if(passwordText.getText().equals("")){
-                String query = "UPDATE users SET nama = ?, username = ?, rfid_code = ?, role = ? WHERE id = ?";
-                try (PreparedStatement statement = dbConnection.getConn().prepareStatement(query)) {
-                    statement.setString(1, namaText.getText());
-                    statement.setString(2, usernameText.getText());
-                    statement.setString(3, rfidText.getText());
-                    String role;
-                    if(roleText.getSelectedIndex() == 0){
-                        role = "1";
-                    }else{
-                        role = "2";
-                    }
-                    statement.setString(4, role);
-                    statement.setInt(5, Integer.parseInt(form.ThrowData()[0]));
-                    statement.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan");
-                    form.loadTableData();
-                    form.ClearSelect(row);
-                    this.setVisible(false);
-                }catch(Exception e){
-                    System.out.println(e.toString());
-                }
-            }else{
-                if(passwordText.getText().length() > 8){
-                    String query = "UPDATE users SET nama = ?, username = ?, rfid_code = ?, password = ?,role = ? WHERE id = ?";
-                    try (PreparedStatement statement = dbConnection.getConn().prepareStatement(query)) {
-                        statement.setString(1, namaText.getText());
-                        statement.setString(2, usernameText.getText());
-                        statement.setString(3, rfidText.getText());
-                        statement.setString(4, PasswordHash.encrypt(passwordText.getText()));
-                        String role;
-                        if(roleText.getSelectedIndex() == 0){
-                            role = "1";
-                        }else{
-                            role = "2";
-                        }
-                        statement.setString(5, role);
-                        statement.setInt(6, Integer.parseInt(form.ThrowData()[0]));
-                        statement.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan");
-                    form.loadTableData();
-                    form.ClearSelect(row);
-                    this.setVisible(false);
-                    }catch(Exception e){
-                        System.out.println(e.toString());
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(this, "Password Harus Setidaknya 8 Character");
-                }
+        }
+        if(Barang.Act == 2 && valUp()){
+            String query = "UPDATE barang SET kode = ?, nama = ?, id_unit = ?, harga = ? WHERE id = ?";
+            try (PreparedStatement stmt = dbConnection.getConn().prepareStatement(query)) {
+                stmt.setString(1, kodeText.getText());
+                stmt.setString(2, namaText.getText());
+                stmt.setInt(3, id_unit.get(unitText.getSelectedIndex()));
+                stmt.setInt(4, Integer.valueOf(hargaText.getText()));
+                stmt.setInt(5, Integer.valueOf(form.ThrowData()[0]));
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Disimpan");
+                form.loadTableData();
+                form.ClearSelect(row);
+                this.setVisible(false);
+            }catch(Exception e){
+                System.out.println(e.toString());
             }
-       }
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
@@ -370,6 +315,14 @@ public class PegawaiForm extends javax.swing.JFrame {
         jButton2.setBackground(new Color(127,39,255));
     }//GEN-LAST:event_jButton2MouseExited
 
+    private void hargaTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hargaTextKeyTyped
+        char input = evt.getKeyChar();
+        
+        if(!Character.isDigit(input)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_hargaTextKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -387,13 +340,13 @@ public class PegawaiForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PegawaiForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BarangForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PegawaiForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BarangForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PegawaiForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BarangForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PegawaiForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BarangForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -407,19 +360,17 @@ public class PegawaiForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField hargaText;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField kodeText;
     private javax.swing.JTextField namaText;
-    private javax.swing.JPasswordField passwordText;
-    private javax.swing.JTextField rfidText;
-    private javax.swing.JComboBox<String> roleText;
-    private javax.swing.JTextField usernameText;
+    private javax.swing.JComboBox<String> unitText;
     // End of variables declaration//GEN-END:variables
 }
