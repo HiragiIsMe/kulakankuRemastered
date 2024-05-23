@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/MainAdmin.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/Barang/Barang.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/RiwayatKulakan.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/Retur.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/RiwayatRetur.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/utils/dbConnection.java</file>
+        </group>
     </open-files>
 </project-private>
