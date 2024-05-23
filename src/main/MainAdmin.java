@@ -485,6 +485,12 @@ public class MainAdmin extends javax.swing.JFrame {
         RiwTranDefault();
         ReturDefault();
         RiwReturDefault();
+        
+        MainPanel.removeAll();
+        Kulakan form = new Kulakan();
+        MainPanel.add(form);
+        MainPanel.revalidate();
+        MainPanel.repaint();
     }//GEN-LAST:event_labelKulakMouseClicked
 
     private void labelRiwKulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRiwKulMouseClicked
@@ -532,6 +538,12 @@ public class MainAdmin extends javax.swing.JFrame {
         RiwTranDefault();
         RiwKulakDefault();
         RiwReturDefault();
+        
+        MainPanel.removeAll();
+        Retur form = new Retur();
+        MainPanel.add(form);
+        MainPanel.revalidate();
+        MainPanel.repaint();
     }//GEN-LAST:event_labelReturMouseClicked
 
     private void labelRiwReturMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRiwReturMouseClicked

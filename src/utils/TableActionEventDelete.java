@@ -8,7 +8,6 @@ package utils;
  *
  * @author hirag
  */
-public interface TableActionEvent {
-       public void onEdit(int row);
+public interface TableActionEventDelete {
        public void onDelete(int row);
 }

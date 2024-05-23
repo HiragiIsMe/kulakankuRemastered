@@ -16,11 +16,11 @@ import main.Pegawai.Pegawai;
  *
  * @author hirag
  */
-public class TableActionCellRenderer extends DefaultTableCellRenderer {
+public class TableActionCellRendererDelete extends DefaultTableCellRenderer {
     
     public Component getTableCellRendererComponent(JTable jTable, Object o, boolean bin, boolean bin1, int row, int column){
         Component com = super.getTableCellRendererComponent(jTable, o, bin1, bin1, row, column);
-        PanelAction action = new PanelAction();
+        PanelActionDelete action = new PanelActionDelete();
         if(bin == false && row % 2 == 0){
             action.setBackground(Color.WHITE);
         } else {

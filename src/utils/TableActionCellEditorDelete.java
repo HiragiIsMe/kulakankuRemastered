@@ -14,11 +14,11 @@ import main.Pegawai.Pegawai;
  *
  * @author hirag
  */
-public class TableActionCellEditor extends AbstractCellEditor implements TableCellEditor{
+public class TableActionCellEditorDelete extends AbstractCellEditor implements TableCellEditor{
     
-   private TableActionEvent event;
+   private TableActionEventDelete event;
    
-   public TableActionCellEditor(TableActionEvent event){
+   public TableActionCellEditorDelete(TableActionEventDelete event){
        this.event = event;
    }
     @Override
@@ -28,7 +28,7 @@ public class TableActionCellEditor extends AbstractCellEditor implements TableCe
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        PanelAction action = new PanelAction();
+        PanelActionDelete action = new PanelActionDelete();
         action.initEvent(event, row);
         action.setBackground(table.getSelectionBackground());
         return action;
