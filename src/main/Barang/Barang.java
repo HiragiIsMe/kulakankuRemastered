@@ -21,8 +21,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import static main.Pegawai.Pegawai.Act;
-import main.Pegawai.PegawaiForm;
 import utils.CustomButton;
 import utils.TableActionCellEditor;
 import utils.TableActionCellRenderer;

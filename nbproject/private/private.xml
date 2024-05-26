@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/MainAdmin.java</file>
-            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/Barang/Barang.java</file>
-            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/RiwayatKulakan.java</file>
-            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/Retur.java</file>
-            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/RiwayatRetur.java</file>
-            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/utils/dbConnection.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/Kasir/MainKasir.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/MainLogin.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/utils/User.java</file>
+            <file>file:/C:/Users/hirag/Documents/NetBeansProjects/KulaankuRemastered/src/main/Dashboard.java</file>
         </group>
     </open-files>
 </project-private>

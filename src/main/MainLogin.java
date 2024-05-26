@@ -4,6 +4,7 @@
  */
 package main;
 
+import main.Kasir.MainKasir;
 import Utils.User;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -34,7 +35,7 @@ public class MainLogin extends javax.swing.JFrame {
         this.dispose();
         this.setLocationRelativeTo(null);
         this.setUndecorated(true);
-        this.setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),10, 10));
+        this.setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(),30, 30));
     }
 
     /**
@@ -282,9 +283,21 @@ public class MainLogin extends javax.swing.JFrame {
                  ResultSet result1 = preparedStatement.executeQuery();
                  if(result1.next()){
                     MainAdmin admin = new MainAdmin();
-                    this.hide();           
-                    admin.show();
-                    admin.setVisible(true);
+                    int id = result1.getInt("id");
+                    String nama = result1.getString("nama");
+                    String role = result1.getString("role");
+
+                    User.setId(id);
+                    User.setNama(nama);
+                    if(role.equals("1")){
+                        MainAdmin form = new MainAdmin();
+                        this.hide();
+                        form.show();
+                    }else{
+                        MainKasir form = new MainKasir();
+                        this.hide();
+                        form.show();
+                    }
                 }else{
                      JOptionPane.showMessageDialog(this, "Akun Tidak Ditemukan");
                  }

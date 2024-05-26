@@ -34,6 +34,7 @@ public class Retur extends javax.swing.JPanel {
     private List<Integer> idDetKul = new ArrayList<>();
     private List<Integer> idBrg = new ArrayList<>();
     private List<Integer> idKulDipilih = new ArrayList<>();
+    private List<Integer> stk_sisa = new ArrayList<>();
     public Retur() {
         initComponents();
         loadTable();
@@ -48,6 +49,7 @@ public class Retur extends javax.swing.JPanel {
         TableActionEventDelete evt = new TableActionEventDelete(){
             @Override
             public void onDelete(int row) {
+                
                 if(MainTable.isEditing()){
                     MainTable.getCellEditor().stopCellEditing();
                 }
@@ -432,14 +434,17 @@ public class Retur extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -490,28 +495,32 @@ public class Retur extends javax.swing.JPanel {
         return true;
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(valAdd()){
-            idKulDipilih.add(idKul.get(kulRet.getSelectedIndex()));
-            DefaultTableModel tbl = (DefaultTableModel)MainTable.getModel();
-            int idKulakan = idDetKul.get(barangRet.getSelectedIndex());
-            int idBarang = idBrg.get(barangRet.getSelectedIndex());
-            String namaBarang = barangRet.getSelectedItem().toString();
-            String stokDiretur = stokRet.getText();
-            String stkung = StokUang.getText();
-            String alasan = alasanRet.getText();
-            
-            if(barRet.isSelected()){
-                tbl.addRow(new Object[]{idKulakan, idBarang, namaBarang, stokDiretur, stkung, "0",alasan, idKul.get(kulRet.getSelectedIndex())});
+         if(valAdd()){
+            if(stk_sisa.get(barangRet.getSelectedIndex()) > Integer.valueOf(stokRet.getText())){
+                idKulDipilih.add(idKul.get(kulRet.getSelectedIndex()));
+                DefaultTableModel tbl = (DefaultTableModel)MainTable.getModel();
+                int idKulakan = idDetKul.get(barangRet.getSelectedIndex());
+                int idBarang = idBrg.get(barangRet.getSelectedIndex());
+                String namaBarang = barangRet.getSelectedItem().toString();
+                String stokDiretur = stokRet.getText();
+                String stkung = StokUang.getText();
+                String alasan = alasanRet.getText();
+
+                if(barRet.isSelected()){
+                    tbl.addRow(new Object[]{idKulakan, idBarang, namaBarang, stokDiretur, stkung, "0",alasan, idKul.get(kulRet.getSelectedIndex())});
+                }else{
+                    tbl.addRow(new Object[]{idKulakan, idBarang, namaBarang, stokDiretur, "0",stkung,alasan, idKul.get(kulRet.getSelectedIndex())});
+                }
+                stokRet.setText("");
+                StokUang.setText("");
+                alasanRet.setText("");
+                if(barRet.isSelected()){
+                    barRet.setSelected(false);
+                }else{
+                    uangRet.setSelected(false);
+                }
             }else{
-                tbl.addRow(new Object[]{idKulakan, idBarang, namaBarang, stokDiretur, "0",stkung,alasan, idKul.get(kulRet.getSelectedIndex())});
-            }
-            stokRet.setText("");
-            StokUang.setText("");
-            alasanRet.setText("");
-            if(barRet.isSelected()){
-                barRet.setSelected(false);
-            }else{
-                uangRet.setSelected(false);
+                JOptionPane.showMessageDialog(this, "Barang Kulakan Yang DiRetur Tidak Mencukupi Dengan Sisa Stok Yang Belum Terjual, Sisa Stok:" + stk_sisa.get(barangRet.getSelectedIndex()).toString());
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -526,7 +535,7 @@ public class Retur extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(MainTable.getRowCount() > 0){
-             DefaultTableModel tbl = (DefaultTableModel)MainTable.getModel();
+                        DefaultTableModel tbl = (DefaultTableModel)MainTable.getModel();
             try{
                 for(int i = 0; i < idKulDipilih.size(); i++){
                 LocalDateTime currentDate = LocalDateTime.now();
@@ -552,17 +561,17 @@ public class Retur extends javax.swing.JPanel {
                             stDetIn.close();
                             
                             if(tbl.getValueAt(j, 4).toString() == "0"){
-                                String QupDetKul = "update detail_kulaan set stokDidapat = stokDidapat - "+ tbl.getValueAt(j, 3)+", hargaKulaan = hargaKulaan + '"+ tbl.getValueAt(j, 5) +"' where id = "+ tbl.getValueAt(j, 0) +"";
+                                String QupDetKul = "update detail_kulaan set stokDidapat = stokDidapat - "+ tbl.getValueAt(j, 3)+", stok_tersisa = stok_tersisa - "+ tbl.getValueAt(j, 3)+",hargaKulaan = hargaKulaan + '"+ tbl.getValueAt(j, 5) +"' where id = "+ tbl.getValueAt(j, 0) +"";
                                 Statement upDetKul = dbConnection.getConn().createStatement();
                                 upDetKul.executeUpdate(QupDetKul);
                                 upDetKul.close();
                             }else{
-                                String QupDetKul = "update detail_kulaan set stokDidapat = stokDidapat - "+ tbl.getValueAt(j, 3)+" where id = "+ tbl.getValueAt(j, 0) +"";
+                                String QupDetKul = "update detail_kulaan set stokDidapat = stokDidapat - "+ tbl.getValueAt(j, 3)+", stok_tersisa = stok_tersisa - "+ tbl.getValueAt(j, 3)+" where id = "+ tbl.getValueAt(j, 0) +"";
                                 Statement upDetKul = dbConnection.getConn().createStatement();
                                 upDetKul.executeUpdate(QupDetKul);
                                 upDetKul.close();
                                 
-                                String QupDetKul1 = "update detail_kulaan set stokDidapat = stokDidapat + " + tbl.getValueAt(j, 4) + " where id = "+ tbl.getValueAt(j, 0) +"";
+                                String QupDetKul1 = "update detail_kulaan set stokDidapat = stokDidapat + " + tbl.getValueAt(j, 4) + ", stok_tersisa = stok_tersisa + "+ tbl.getValueAt(j, 4)+" where id = "+ tbl.getValueAt(j, 0) +"";
                                 Statement upDetKul1 = dbConnection.getConn().createStatement();
                                 upDetKul1.executeUpdate(QupDetKul1);
                                 upDetKul1.close();
@@ -598,13 +607,16 @@ public class Retur extends javax.swing.JPanel {
 
     private void kulRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kulRetActionPerformed
        idBrg.clear();
+       idDetKul.clear();
+       stk_sisa.clear();
         DefaultComboBoxModel mdl = new DefaultComboBoxModel();
         try{
-            String query = "select * from detail_kulaan join barang on barang.id = detail_kulaan.id_barang where id_kulaan="+ idKul.get(kulRet.getSelectedIndex())+"";
+            String query = "select * from detail_kulaan join barang on barang.id = detail_kulaan.id_barang where stok_tersisa > 0 and id_kulaan="+ idKul.get(kulRet.getSelectedIndex())+"";
             ResultSet rs = dbConnection.getData(query);
             while(rs.next()){
                 idDetKul.add(rs.getInt("id"));
                 idBrg.add(rs.getInt("id_barang"));
+                stk_sisa.add(rs.getInt("stok_tersisa"));
                 mdl.addElement(rs.getString("nama") + " (" + rs.getString("kode") + ")");
             }
         }catch(Exception e){

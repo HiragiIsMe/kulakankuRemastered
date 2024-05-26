@@ -407,7 +407,7 @@ public class Kulakan extends javax.swing.JPanel {
         }
         
         if(Integer.valueOf(stokKul.getText()) < 1 || Integer.valueOf(hargaKul.getText()) < 1){
-            JOptionPane.showMessageDialog(this, "Stok Dan Harga KULAKAN Tidak Boleh 0");
+            JOptionPane.showMessageDialog(this, "Stok Dan Harga Kulakan Tidak Boleh 0");
             return false;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -473,7 +473,7 @@ public class Kulakan extends javax.swing.JPanel {
 
                     DefaultTableModel tbl = (DefaultTableModel)MainTable.getModel();
                     for(int i = 0; i < MainTable.getRowCount(); i++){
-                        String detKulIn = "insert into detail_kulaan(id_barang, hargaKulaan, stokDidapat, tgl_exp, id_kulaan) values("+ tbl.getValueAt(i, 0) +", "+ tbl.getValueAt(i, 2) +", "+ tbl.getValueAt(i, 3) +", '"+ tbl.getValueAt(i, 4)+"', "+ idKul +")";
+                        String detKulIn = "insert into detail_kulaan(id_barang, hargaKulaan, stokDidapat, stok_tersisa,tgl_exp, id_kulaan) values("+ tbl.getValueAt(i, 0) +", "+ tbl.getValueAt(i, 2) +", "+ tbl.getValueAt(i, 3) +",  "+ tbl.getValueAt(i, 3) +",'"+ tbl.getValueAt(i, 4)+"', "+ idKul +")";
                         Statement stDetIn = dbConnection.getConn().createStatement();
                         stDetIn.executeUpdate(detKulIn);
                         stDetIn.close();
@@ -527,7 +527,11 @@ public class Kulakan extends javax.swing.JPanel {
     }//GEN-LAST:event_hargaKulKeyTyped
 
     private void stokKulKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_stokKulKeyTyped
-        // TODO add your handling code here:
+        char input = evt.getKeyChar();
+
+        if(!Character.isDigit(input)){
+            evt.consume();
+        }
     }//GEN-LAST:event_stokKulKeyTyped
 
 

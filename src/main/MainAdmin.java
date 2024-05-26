@@ -521,6 +521,12 @@ public class MainAdmin extends javax.swing.JFrame {
         RiwKulakDefault();
         ReturDefault();
         RiwReturDefault();
+        
+        MainPanel.removeAll();
+        RiwayatTransaksi form = new RiwayatTransaksi();
+        MainPanel.add(form);
+        MainPanel.revalidate();
+        MainPanel.repaint();
     }//GEN-LAST:event_labelRiwTranMouseClicked
 
     private void labelRiwTran1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRiwTran1MouseClicked
